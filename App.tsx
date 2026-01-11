@@ -14,6 +14,9 @@ import { OfflineIndicator, LockScreen } from '@/components/ui';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { initializeNotifications, validateEnv, createLogger, getPreference } from '@/lib';
 
+// Import Sentry config (must be imported early to initialize)
+import { Sentry } from '@/lib/sentry';
+
 const log = createLogger('App');
 
 function AppContent() {
@@ -84,10 +87,10 @@ function AppContent() {
   );
 }
 
-export default function App() {
+export default Sentry.wrap(function App() {
   useEffect(() => {
-    log.info('App starting', { 
-      dev: __DEV__, 
+    log.info('App starting', {
+      dev: __DEV__,
       timestamp: new Date().toISOString(),
     });
 
@@ -125,7 +128,7 @@ export default function App() {
       </GestureHandlerRootView>
     </ErrorBoundary>
   );
-}
+});
 
 const styles = StyleSheet.create({
   root: {

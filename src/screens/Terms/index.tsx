@@ -117,6 +117,7 @@ export function TermsScreen() {
             </Text>
             <View style={styles.bulletList}>
               <SimpleBullet text="Supabase for authentication, database, and file storage" />
+              <SimpleBullet text="Sentry for error tracking and performance monitoring" />
               <SimpleBullet text="OpenAI for AI-powered journey recaps (text notes only)" />
               <SimpleBullet text="OpenWeather for weather data" />
               <SimpleBullet text="Unsplash for journey cover images" />

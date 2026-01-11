@@ -6,6 +6,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuth } from '@/providers';
+import { navigationIntegration } from '@/lib/sentry';
 import {
   LoginScreen,
   HomeScreen,
@@ -28,6 +29,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function AppNavigator() {
   const { user, loading } = useAuth();
+  const navigationRef = React.useRef(null);
 
   // Keep showing native splash while auth loading
   if (loading) {
@@ -35,7 +37,12 @@ export function AppNavigator() {
   }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() => {
+        navigationIntegration.registerNavigationContainer(navigationRef);
+      }}
+    >
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
