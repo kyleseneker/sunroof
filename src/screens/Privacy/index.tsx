@@ -6,7 +6,16 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Linking } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-import { ShieldCheck, Eye, Database, Lock, UserCheck, Mail, Cpu, MapPin } from 'lucide-react-native';
+import {
+  ShieldCheck,
+  Eye,
+  Database,
+  Lock,
+  UserCheck,
+  Mail,
+  Cpu,
+  MapPin,
+} from 'lucide-react-native';
 import { colors, spacing, fontSize, fontWeight, borderRadius } from '@/constants/theme';
 import { Background, Header, Hero } from '@/components/ui';
 
@@ -30,13 +39,10 @@ export function PrivacyScreen() {
         />
 
         <View style={styles.sections}>
-          <Section
-            icon={<Eye size={18} color={colors.primary} />}
-            title="Overview"
-          >
+          <Section icon={<Eye size={18} color={colors.primary} />} title="Overview">
             <Text style={styles.text}>
-              Sunroof is committed to protecting your privacy. This Privacy Policy explains how 
-              we collect, use, and safeguard your information when you use our mobile application.
+              Sunroof is committed to protecting your privacy. This Privacy Policy explains how we
+              collect, use, and safeguard your information when you use our mobile application.
             </Text>
           </Section>
 
@@ -66,13 +72,10 @@ export function PrivacyScreen() {
             />
           </Section>
 
-          <Section
-            icon={<MapPin size={18} color={colors.primary} />}
-            title="Location & Weather"
-          >
+          <Section icon={<MapPin size={18} color={colors.primary} />} title="Location & Weather">
             <Text style={styles.text}>
-              With your permission, we capture location and weather data with each memory to 
-              enrich your journey experience. This data is:
+              With your permission, we capture location and weather data with each memory to enrich
+              your journey experience. This data is:
             </Text>
             <View style={styles.bulletList}>
               <SimpleBullet text="Only collected when you actively capture a memory" />
@@ -82,12 +85,10 @@ export function PrivacyScreen() {
             </View>
           </Section>
 
-          <Section
-            icon={<Cpu size={18} color={colors.primary} />}
-            title="AI Features"
-          >
+          <Section icon={<Cpu size={18} color={colors.primary} />} title="AI Features">
             <Text style={styles.text}>
-              Our AI Recap feature generates journey summaries. Here's how we protect your privacy:
+              Our AI Recap feature generates journey summaries. Here&apos;s how we protect your
+              privacy:
             </Text>
             <View style={styles.bulletList}>
               <SimpleBullet text="Only text notes are sent to AI—never photos, videos, or audio" />
@@ -97,10 +98,7 @@ export function PrivacyScreen() {
             </View>
           </Section>
 
-          <Section
-            icon={<Lock size={18} color={colors.primary} />}
-            title="Data Storage & Security"
-          >
+          <Section icon={<Lock size={18} color={colors.primary} />} title="Data Storage & Security">
             <Text style={styles.text}>
               Your memories are stored securely using industry-standard practices:
             </Text>
@@ -112,10 +110,7 @@ export function PrivacyScreen() {
             </View>
           </Section>
 
-          <Section
-            icon={<UserCheck size={18} color={colors.primary} />}
-            title="Your Rights"
-          >
+          <Section icon={<UserCheck size={18} color={colors.primary} />} title="Your Rights">
             <SimpleBullet text="Access all your personal data through the app" />
             <SimpleBullet text="Delete your account and all associated data" />
             <SimpleBullet text="Export your unlocked memories" />
@@ -123,13 +118,9 @@ export function PrivacyScreen() {
             <SimpleBullet text="Opt out of AI features entirely" />
           </Section>
 
-          <Section
-            icon={<Mail size={18} color={colors.primary} />}
-            title="Contact Us"
-            isLast
-          >
+          <Section icon={<Mail size={18} color={colors.primary} />} title="Contact Us" isLast>
             <Text style={styles.text}>
-              If you have questions about this Privacy Policy or want to exercise your data rights, 
+              If you have questions about this Privacy Policy or want to exercise your data rights,
               please contact us at{' '}
               <Text
                 style={styles.link}

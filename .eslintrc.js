@@ -54,6 +54,16 @@ module.exports = {
       version: 'detect',
     },
   },
+  overrides: [
+    {
+      files: ['**/__tests__/**/*.ts', '**/__tests__/**/*.tsx', '**/*.test.ts', '**/*.test.tsx'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        'react-native/no-inline-styles': 'off',
+      },
+    },
+  ],
   ignorePatterns: [
     'node_modules/',
     'android/',
@@ -63,6 +73,7 @@ module.exports = {
     'metro.config.js',
     'jest.config.js',
     '*.d.ts',
+    'supabase/functions/', // Deno runtime, different module system
   ],
 };
 

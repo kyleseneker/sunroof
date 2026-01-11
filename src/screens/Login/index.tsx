@@ -17,7 +17,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HelpCircle } from 'lucide-react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { colors, spacing, fontSize } from '@/constants/theme';
+import { spacing, fontSize } from '@/constants/theme';
 import { Background, IconButton } from '@/components/ui';
 import { useAuth } from '@/providers';
 import { hapticSuccess, hapticError, createLogger } from '@/lib';
@@ -185,76 +185,76 @@ export function LoginScreen() {
   return (
     <View style={styles.container}>
       <Background unsplashQuery="warm sunset mountain landscape" />
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.keyboardView}
-    >
-      <ScrollView
-        contentContainerStyle={[
-          styles.scrollContent,
-          { paddingTop: insets.top + spacing.lg, paddingBottom: insets.bottom + spacing.xl },
-        ]}
-        keyboardShouldPersistTaps="handled"
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardView}
       >
-        {/* Help button - top right */}
-        <View style={styles.topBar}>
+        <ScrollView
+          contentContainerStyle={[
+            styles.scrollContent,
+            { paddingTop: insets.top + spacing.lg, paddingBottom: insets.bottom + spacing.xl },
+          ]}
+          keyboardShouldPersistTaps="handled"
+        >
+          {/* Help button - top right */}
+          <View style={styles.topBar}>
+            <View style={styles.spacer} />
+            <IconButton
+              icon={<HelpCircle size={22} color="rgba(255,255,255,0.6)" />}
+              onPress={() => navigation.navigate('Help')}
+              accessibilityLabel="Help"
+              variant="ghost"
+            />
+          </View>
+
+          {/* Main content */}
+          <View style={styles.mainContent}>
+            {/* Hero (hide during OTP entry) */}
+            {!emailSent && <LoginHero />}
+
+            {/* Auth form */}
+            <View style={styles.authContainer}>
+              {emailSent ? (
+                <OtpVerification
+                  email={email}
+                  otp={otp}
+                  onOtpChange={handleOtpChange}
+                  onOtpKeyPress={handleOtpKeyPress}
+                  verifying={verifying}
+                  otpError={otpError}
+                  isLoading={isLoading}
+                  onResendCode={handleResendCode}
+                  onChangeEmail={handleChangeEmail}
+                />
+              ) : (
+                <EmailForm
+                  email={email}
+                  onEmailChange={handleEmailChange}
+                  emailError={emailError}
+                  isLoading={isLoading}
+                  onEmailSubmit={handleEmailSignIn}
+                  onGoogleSignIn={handleGoogleSignIn}
+                />
+              )}
+            </View>
+
+            {/* Legal text */}
+            <View style={styles.legalContainer}>
+              <Text style={styles.legalText}>By signing in, you agree to our </Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Privacy')}>
+                <Text style={styles.legalLink}>Privacy Policy</Text>
+              </TouchableOpacity>
+              <Text style={styles.legalText}> and </Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Terms')}>
+                <Text style={styles.legalLink}>Terms of Service</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Spacer */}
           <View style={styles.spacer} />
-          <IconButton
-            icon={<HelpCircle size={22} color="rgba(255,255,255,0.6)" />}
-            onPress={() => navigation.navigate('Help')}
-            accessibilityLabel="Help"
-            variant="ghost"
-          />
-        </View>
-
-        {/* Main content */}
-        <View style={styles.mainContent}>
-          {/* Hero (hide during OTP entry) */}
-          {!emailSent && <LoginHero />}
-
-          {/* Auth form */}
-          <View style={styles.authContainer}>
-            {emailSent ? (
-              <OtpVerification
-                email={email}
-                otp={otp}
-                onOtpChange={handleOtpChange}
-                onOtpKeyPress={handleOtpKeyPress}
-                verifying={verifying}
-                otpError={otpError}
-                isLoading={isLoading}
-                onResendCode={handleResendCode}
-                onChangeEmail={handleChangeEmail}
-              />
-            ) : (
-              <EmailForm
-                email={email}
-                onEmailChange={handleEmailChange}
-                emailError={emailError}
-                isLoading={isLoading}
-                onEmailSubmit={handleEmailSignIn}
-                onGoogleSignIn={handleGoogleSignIn}
-              />
-            )}
-          </View>
-
-          {/* Legal text */}
-          <View style={styles.legalContainer}>
-            <Text style={styles.legalText}>By signing in, you agree to our </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Privacy')}>
-              <Text style={styles.legalLink}>Privacy Policy</Text>
-            </TouchableOpacity>
-            <Text style={styles.legalText}> and </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Terms')}>
-              <Text style={styles.legalLink}>Terms of Service</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Spacer */}
-        <View style={styles.spacer} />
-      </ScrollView>
-    </KeyboardAvoidingView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 }
@@ -309,4 +309,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-

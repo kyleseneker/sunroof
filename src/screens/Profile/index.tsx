@@ -18,7 +18,7 @@ import {
   Cloud,
   ScanFace,
 } from 'lucide-react-native';
-import { colors, spacing, fontSize, fontWeight } from '@/constants/theme';
+import { colors, spacing, fontSize } from '@/constants/theme';
 import { Background, Header } from '@/components/ui';
 import { useAuth, useToast } from '@/providers';
 import {
@@ -120,11 +120,6 @@ export function ProfileScreen() {
       },
     ]);
   }, [signOut]);
-
-  const handleBack = useCallback(() => {
-    hapticClick();
-    navigation.goBack();
-  }, [navigation]);
 
   const handleToggleTemperatureUnit = useCallback(async () => {
     hapticClick();
@@ -354,10 +349,7 @@ export function ProfileScreen() {
           />
           <MenuItem
             icon={
-              <Cloud
-                size={18}
-                color={captureLocation ? colors.primary : 'rgba(255,255,255,0.3)'}
-              />
+              <Cloud size={18} color={captureLocation ? colors.primary : 'rgba(255,255,255,0.3)'} />
             }
             label="Capture Weather"
             rightElement={
@@ -468,4 +460,3 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
   },
 });
-

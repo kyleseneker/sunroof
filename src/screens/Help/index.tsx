@@ -33,30 +33,24 @@ export function HelpScreen() {
         />
 
         <View style={styles.sections}>
-          <Section
-            icon={<Compass size={18} color={colors.primary} />}
-            title="1. Start a Journey"
-          >
+          <Section icon={<Compass size={18} color={colors.primary} />} title="1. Start a Journey">
             <Text style={styles.text}>
-              Create a new journey before you go. Choose when your memories unlock — a week, a month, or longer.
+              Create a new journey before you go. Choose when your memories unlock — a week, a
+              month, or longer.
             </Text>
           </Section>
 
-          <Section
-            icon={<Camera size={18} color={colors.primary} />}
-            title="2. Capture Moments"
-          >
+          <Section icon={<Camera size={18} color={colors.primary} />} title="2. Capture Moments">
             <Text style={styles.text}>
-              Take photos, record voice memos, and write notes during your adventure. They go straight to the Vault — no peeking!
+              Take photos, record voice memos, and write notes during your adventure. They go
+              straight to the Vault — no peeking!
             </Text>
           </Section>
 
-          <Section
-            icon={<Lock size={18} color={colors.primary} />}
-            title="3. Stay Present"
-          >
+          <Section icon={<Lock size={18} color={colors.primary} />} title="3. Stay Present">
             <Text style={styles.text}>
-              Your memories stay hidden until the timer expires. Focus on the moment, not your camera roll.
+              Your memories stay hidden until the timer expires. Focus on the moment, not your
+              camera roll.
             </Text>
           </Section>
 
@@ -66,7 +60,8 @@ export function HelpScreen() {
             isLast
           >
             <Text style={styles.text}>
-              When time's up, open your Vault and rediscover your journey with fresh eyes. It's like developing film!
+              When time&apos;s up, open your Vault and rediscover your journey with fresh eyes.
+              It&apos;s like developing film!
             </Text>
           </Section>
         </View>

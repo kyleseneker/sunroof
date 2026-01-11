@@ -1,16 +1,17 @@
+// @ts-nocheck - Deno runtime, URL imports not recognized by TypeScript
 // Invite Collaborator Edge Function
 // Handles inviting users to collaborate on a journey
 // - If user exists: returns their user_id
 // - If user doesn't exist: sends Supabase invite email and returns email for pending storage
 
 /* eslint-disable no-console */
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+};
 
 interface InviteRequest {
   email: string;
@@ -28,7 +29,7 @@ interface InviteResponse {
 serve(async (req) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders })
+    return new Response('ok', { headers: corsHeaders });
   }
 
   console.log('[invite-collaborator] Starting...');
@@ -36,7 +37,7 @@ serve(async (req) => {
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    
+
     if (!supabaseUrl || !serviceRoleKey) {
       console.error('[invite-collaborator] Missing environment variables');
       return new Response(
@@ -53,16 +54,20 @@ serve(async (req) => {
       },
     });
 
-    const body = await req.json() as InviteRequest;
+    const body = (await req.json()) as InviteRequest;
     const { email, journeyName, inviterName } = body;
-    
+
     const normalizedEmail = email.trim().toLowerCase();
-    
-    console.log('[invite-collaborator] Processing invite for:', normalizedEmail.substring(0, 3) + '***');
+
+    console.log(
+      '[invite-collaborator] Processing invite for:',
+      normalizedEmail.substring(0, 3) + '***'
+    );
 
     // First, check if user already exists
-    const { data: existingUser } = await supabaseAdmin
-      .rpc('get_user_id_by_email', { email_input: normalizedEmail });
+    const { data: existingUser } = await supabaseAdmin.rpc('get_user_id_by_email', {
+      email_input: normalizedEmail,
+    });
 
     if (existingUser) {
       console.log('[invite-collaborator] User exists, returning user_id');
@@ -79,16 +84,16 @@ serve(async (req) => {
 
     // User doesn't exist - send notification email via Resend
     console.log('[invite-collaborator] User not found, sending notification email...');
-    
+
     let emailSent = false;
     const resendKey = Deno.env.get('RESEND_API_KEY');
-    
+
     if (resendKey) {
       try {
         const emailResponse = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${resendKey}`,
+            Authorization: `Bearer ${resendKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -117,7 +122,7 @@ serve(async (req) => {
             `,
           }),
         });
-        
+
         if (emailResponse.ok) {
           emailSent = true;
           console.log('[invite-collaborator] Notification email sent via Resend');
@@ -133,7 +138,7 @@ serve(async (req) => {
     }
 
     console.log('[invite-collaborator] Returning pending invite, email sent:', emailSent);
-    
+
     return new Response(
       JSON.stringify({
         userId: null,
@@ -143,17 +148,16 @@ serve(async (req) => {
       } as InviteResponse),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('[invite-collaborator] Unhandled error:', error);
     return new Response(
-      JSON.stringify({ 
-        userId: null, 
-        email: '', 
-        isNewUser: false, 
-        error: 'Internal server error' 
+      JSON.stringify({
+        userId: null,
+        email: '',
+        isNewUser: false,
+        error: 'Internal server error',
       } as InviteResponse),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
-})
+});

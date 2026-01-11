@@ -4,11 +4,28 @@
  */
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, ActivityIndicator, ListRenderItem } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+  ListRenderItem,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Pencil, Trash2, CheckCircle2, ShieldCheck, Tag, Plus, MoreVertical } from 'lucide-react-native';
+import {
+  Pencil,
+  Trash2,
+  CheckCircle2,
+  ShieldCheck,
+  Tag,
+  Plus,
+  MoreVertical,
+} from 'lucide-react-native';
 import { colors, spacing, fontSize, fontWeight, borderRadius } from '@/constants/theme';
 import { Camera } from 'lucide-react-native';
 import { Modal, Button, Input, Background, Header, IconButton, EmptyState } from '@/components/ui';
@@ -36,10 +53,7 @@ import type { Memory, RootStackParamList, AIRecapResponse } from '@/types';
 
 const log = createLogger('Gallery');
 
-import {
-  GalleryHero,
-  DaySection,
-} from './components';
+import { GalleryHero, DaySection } from './components';
 
 type GalleryRouteProp = RouteProp<RootStackParamList, 'Gallery'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -75,7 +89,7 @@ export function GalleryScreen() {
   const { showToast } = useToast();
 
   // Journey & memories state
-  const [journey, setJourney] = useState(initialJourney);
+  const [journey, _setJourney] = useState(initialJourney);
   const [memories, setMemories] = useState<Memory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [temperatureUnit, setTemperatureUnit] = useState<TemperatureUnit>('fahrenheit');
@@ -106,8 +120,7 @@ export function GalleryScreen() {
   // Memoized data
   const memoriesByDay = useMemo(() => groupMemoriesByDay(memories), [memories]);
   const dayKeys = useMemo(
-    () =>
-      Object.keys(memoriesByDay).sort((a, b) => new Date(a).getTime() - new Date(b).getTime()),
+    () => Object.keys(memoriesByDay).sort((a, b) => new Date(a).getTime() - new Date(b).getTime()),
     [memoriesByDay]
   );
   const firstDayDate = dayKeys.length > 0 ? new Date(dayKeys[0]) : null;
@@ -404,7 +417,7 @@ export function GalleryScreen() {
   };
 
   // Prepare data for FlatList - combines hero and day sections
-  type ListItem = 
+  type ListItem =
     | { type: 'hero' }
     | { type: 'day'; dayKey: string; dayNumber: number; memories: Memory[] };
 
@@ -414,9 +427,7 @@ export function GalleryScreen() {
       const dayDate = new Date(dayKey);
       const dayNumber = firstDayDate
         ? Math.abs(
-            Math.floor(
-              (dayDate.getTime() - firstDayDate.getTime()) / (1000 * 60 * 60 * 24)
-            )
+            Math.floor((dayDate.getTime() - firstDayDate.getTime()) / (1000 * 60 * 60 * 24))
           ) + 1
         : dayIndex + 1;
       items.push({
@@ -540,7 +551,8 @@ export function GalleryScreen() {
               disabled={selectedMemories.size === 0 || isDeletingSelected}
               style={[
                 styles.selectionActionButton,
-                (selectedMemories.size === 0 || isDeletingSelected) && styles.selectionActionButtonDisabled,
+                (selectedMemories.size === 0 || isDeletingSelected) &&
+                  styles.selectionActionButtonDisabled,
               ]}
               accessibilityLabel="Delete selected memories"
               accessibilityRole="button"
@@ -559,7 +571,12 @@ export function GalleryScreen() {
           <ActivityIndicator color={colors.white} size="large" />
         </View>
       ) : memories.length === 0 ? (
-        <View style={[styles.scrollContent, { paddingTop: 160, paddingBottom: insets.bottom + spacing.xl }]}>
+        <View
+          style={[
+            styles.scrollContent,
+            { paddingTop: 160, paddingBottom: insets.bottom + spacing.xl },
+          ]}
+        >
           <GalleryHero
             journey={journey}
             photoCount={photoCount}
@@ -584,7 +601,10 @@ export function GalleryScreen() {
           renderItem={renderListItem}
           keyExtractor={keyExtractor}
           style={styles.scrollView}
-          contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + spacing.xl }]}
+          contentContainerStyle={[
+            styles.scrollContent,
+            { paddingBottom: insets.bottom + spacing.xl },
+          ]}
           showsVerticalScrollIndicator={false}
           removeClippedSubviews={true}
           maxToRenderPerBatch={5}
@@ -732,9 +752,6 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingHorizontal: spacing.lg,
   },
-  timeline: {
-    gap: spacing.xl,
-  },
   loadingContainer: {
     height: 200,
     alignItems: 'center',
@@ -831,4 +848,3 @@ const styles = StyleSheet.create({
     backgroundColor: colors.overlay.dark,
   },
 });
-

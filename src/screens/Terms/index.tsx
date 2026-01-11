@@ -6,7 +6,15 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Linking } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-import { FileText, Shield, Users, AlertTriangle, Scale, RefreshCw, Mail } from 'lucide-react-native';
+import {
+  FileText,
+  Shield,
+  Users,
+  AlertTriangle,
+  Scale,
+  RefreshCw,
+  Mail,
+} from 'lucide-react-native';
 import { colors, spacing, fontSize, fontWeight, borderRadius } from '@/constants/theme';
 import { Background, Header, Hero } from '@/components/ui';
 
@@ -30,13 +38,10 @@ export function TermsScreen() {
         />
 
         <View style={styles.sections}>
-          <Section
-            icon={<Shield size={18} color={colors.primary} />}
-            title="Acceptance of Terms"
-          >
+          <Section icon={<Shield size={18} color={colors.primary} />} title="Acceptance of Terms">
             <Text style={styles.text}>
-              By accessing or using Sunroof, you agree to be bound by these Terms of Service. 
-              If you do not agree to these terms, please do not use the app.
+              By accessing or using Sunroof, you agree to be bound by these Terms of Service. If you
+              do not agree to these terms, please do not use the app.
             </Text>
           </Section>
 
@@ -45,8 +50,8 @@ export function TermsScreen() {
             title="Description of Service"
           >
             <Text style={styles.text}>
-              Sunroof is a time capsule app for capturing memories during journeys. You can capture 
-              photos, videos, audio memos, and text notes—all of which remain locked until your 
+              Sunroof is a time capsule app for capturing memories during journeys. You can capture
+              photos, videos, audio memos, and text notes—all of which remain locked until your
               chosen unlock date. Features include:
             </Text>
             <View style={styles.bulletList}>
@@ -59,20 +64,14 @@ export function TermsScreen() {
             </View>
           </Section>
 
-          <Section
-            icon={<Users size={18} color={colors.primary} />}
-            title="User Content"
-          >
+          <Section icon={<Users size={18} color={colors.primary} />} title="User Content">
             <SimpleBullet text="You retain all rights to the photos, videos, audio, and notes you create" />
             <SimpleBullet text="You are responsible for all content you capture and upload" />
             <SimpleBullet text="Do not upload content that violates any laws or third-party rights" />
             <SimpleBullet text="Content shared in collaborative journeys is visible to all collaborators after unlock" />
           </Section>
 
-          <Section
-            icon={<AlertTriangle size={18} color={colors.primary} />}
-            title="Acceptable Use"
-          >
+          <Section icon={<AlertTriangle size={18} color={colors.primary} />} title="Acceptable Use">
             <Text style={styles.text}>You agree not to:</Text>
             <View style={styles.bulletList}>
               <SimpleBullet text="Use the service for any illegal purpose" />
@@ -83,35 +82,25 @@ export function TermsScreen() {
             </View>
           </Section>
 
-          <Section
-            icon={<Scale size={18} color={colors.primary} />}
-            title="Disclaimer & Liability"
-          >
+          <Section icon={<Scale size={18} color={colors.primary} />} title="Disclaimer & Liability">
             <Text style={styles.text}>
-              The service is provided "as is" without warranties of any kind. While we strive to 
-              keep your memories safe, we do not guarantee that the service will be uninterrupted, 
-              secure, or error-free. We recommend keeping copies of important memories. To the 
-              maximum extent permitted by law, we shall not be liable for any loss of data or 
-              indirect damages.
+              The service is provided &quot;as is&quot; without warranties of any kind. While we
+              strive to keep your memories safe, we do not guarantee that the service will be
+              uninterrupted, secure, or error-free. We recommend keeping copies of important
+              memories. To the maximum extent permitted by law, we shall not be liable for any loss
+              of data or indirect damages.
             </Text>
           </Section>
 
-          <Section
-            icon={<RefreshCw size={18} color={colors.primary} />}
-            title="Changes to Terms"
-          >
+          <Section icon={<RefreshCw size={18} color={colors.primary} />} title="Changes to Terms">
             <Text style={styles.text}>
-              We reserve the right to modify these terms at any time. We will notify you of 
-              significant changes through the app. Continued use of the service after changes 
+              We reserve the right to modify these terms at any time. We will notify you of
+              significant changes through the app. Continued use of the service after changes
               constitutes acceptance of the new terms.
             </Text>
           </Section>
 
-          <Section
-            icon={<Mail size={18} color={colors.primary} />}
-            title="Contact"
-            isLast
-          >
+          <Section icon={<Mail size={18} color={colors.primary} />} title="Contact" isLast>
             <Text style={styles.text}>
               For questions about these Terms, contact us at{' '}
               <Text

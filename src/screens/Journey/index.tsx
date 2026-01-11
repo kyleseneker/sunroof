@@ -4,18 +4,11 @@
  */
 
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { Plus, Compass, Check, Pencil } from 'lucide-react-native';
-import { colors, spacing, fontSize, fontWeight, borderRadius } from '@/constants/theme';
+import { colors, spacing, borderRadius } from '@/constants/theme';
 import { Background, Header, Button, Hero, EmojiSelector } from '@/components/ui';
 import { useAuth, useToast } from '@/providers';
 import { createJourney, updateJourney, inviteCollaborator } from '@/services';
@@ -32,11 +25,7 @@ import type { RootStackParamList } from '@/types';
 
 const log = createLogger('Journey');
 
-import {
-  DestinationInput,
-  UnlockDatePicker,
-  CollaboratorSection,
-} from './components';
+import { DestinationInput, UnlockDatePicker, CollaboratorSection } from './components';
 
 const DESTINATION_PLACEHOLDERS = [
   'Paris',
@@ -85,7 +74,9 @@ export function JourneyScreen() {
 
   // Collaborator state - userId is null for pending invites (new users)
   const [collaboratorEmail, setCollaboratorEmail] = useState('');
-  const [collaborators, setCollaborators] = useState<{ email: string; userId: string | null; isPending: boolean }[]>([]);
+  const [collaborators, setCollaborators] = useState<
+    { email: string; userId: string | null; isPending: boolean }[]
+  >([]);
 
   // Random placeholder for create mode
   const placeholder = useMemo(
@@ -161,13 +152,13 @@ export function JourneyScreen() {
     try {
       // Process collaborator email if entered
       const allCollaboratorValues: string[] = collaborators.map((c) => c.userId || c.email);
-      
+
       const pendingEmail = collaboratorEmail.trim().toLowerCase();
       if (pendingEmail && pendingEmail.includes('@') && pendingEmail.includes('.')) {
         // Check not already added
         const alreadyAdded = collaborators.some((c) => c.email === pendingEmail);
         const alreadyShared = existingJourney?.shared_with?.includes(pendingEmail);
-        
+
         if (!alreadyAdded && !alreadyShared && pendingEmail !== user.email) {
           // Invite the collaborator
           const { data } = await inviteCollaborator(
@@ -175,7 +166,7 @@ export function JourneyScreen() {
             name.trim() || 'a journey',
             user.email
           );
-          
+
           if (data) {
             // Add to shared_with (userId if exists, email if pending)
             allCollaboratorValues.push(data.userId || data.email);
@@ -271,9 +262,9 @@ export function JourneyScreen() {
 
   return (
     <View style={styles.container}>
-      <Background 
+      <Background
         imageUrl={coverImageUrl || undefined}
-        unsplashQuery={!coverImageUrl ? 'warm sunset mountain landscape' : undefined} 
+        unsplashQuery={!coverImageUrl ? 'warm sunset mountain landscape' : undefined}
       />
       <Header paddingTop={insets.top} />
 
@@ -292,30 +283,31 @@ export function JourneyScreen() {
         >
           {/* Hero */}
           <Hero
-            icon={isEditMode 
-              ? <Pencil size={32} color={colors.white} />
-              : <Compass size={32} color={colors.white} />
+            icon={
+              isEditMode ? (
+                <Pencil size={32} color={colors.white} />
+              ) : (
+                <Compass size={32} color={colors.white} />
+              )
             }
             title={isEditMode ? 'Edit Journey' : 'New Journey'}
-            subtitle={isEditMode ? 'Update your adventure details' : 'Where will your next adventure take you?'}
+            subtitle={
+              isEditMode
+                ? 'Update your adventure details'
+                : 'Where will your next adventure take you?'
+            }
           />
 
           {/* Form Card */}
           <View style={styles.formCard}>
             {/* Destination/Name */}
-            <DestinationInput
-              value={name}
-              onChangeText={setName}
-              placeholder={placeholder}
-            />
+            <DestinationInput value={name} onChangeText={setName} placeholder={placeholder} />
 
             {/* Emoji */}
             <EmojiSelector value={emoji} onChange={setEmoji} />
 
             {/* Date - only if journey is still locked */}
-            {isLocked && (
-              <UnlockDatePicker value={unlockDate} onChange={setUnlockDate} />
-            )}
+            {isLocked && <UnlockDatePicker value={unlockDate} onChange={setUnlockDate} />}
 
             {/* Collaborators */}
             <CollaboratorSection
@@ -335,9 +327,12 @@ export function JourneyScreen() {
             loading={loading}
             disabled={!name.trim()}
             fullWidth
-            icon={isEditMode 
-              ? <Check size={20} color={colors.grayDark} />
-              : <Plus size={20} color={colors.grayDark} />
+            icon={
+              isEditMode ? (
+                <Check size={20} color={colors.grayDark} />
+              ) : (
+                <Plus size={20} color={colors.grayDark} />
+              )
             }
             style={styles.submitButton}
           />

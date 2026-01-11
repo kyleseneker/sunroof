@@ -4,9 +4,15 @@
  */
 
 import React, { ReactNode } from 'react';
-import { View, Text, StyleSheet, ViewStyle } from 'react-native';
+import { View, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { colors, spacing, fontSize, fontWeight } from '@/constants/theme';
+
+const titleSizes: Record<'md' | 'lg' | 'xl', TextStyle> = {
+  md: { fontSize: fontSize.xl },
+  lg: { fontSize: fontSize['2xl'] },
+  xl: { fontSize: fontSize['3xl'] },
+};
 
 interface HeroProps {
   /** Icon to display in the gradient circle */
@@ -35,7 +41,7 @@ export function Hero({
   titleSize = 'lg',
 }: HeroProps) {
   const iconDimensions = iconSize === 'lg' ? 72 : 56;
-  
+
   return (
     <View style={[styles.hero, style]}>
       <View style={styles.iconContainer}>
@@ -53,27 +59,15 @@ export function Hero({
           {icon}
         </LinearGradient>
       </View>
-      
-      <Text style={[styles.title, titleStyles[titleSize]]}>{title}</Text>
-      
+
+      <Text style={[styles.title, titleSizes[titleSize]]}>{title}</Text>
+
       {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
-      
+
       {children}
     </View>
   );
 }
-
-const titleStyles = StyleSheet.create({
-  md: {
-    fontSize: fontSize.xl,
-  },
-  lg: {
-    fontSize: fontSize['2xl'],
-  },
-  xl: {
-    fontSize: fontSize['3xl'],
-  },
-});
 
 const styles = StyleSheet.create({
   hero: {

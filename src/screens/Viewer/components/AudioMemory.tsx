@@ -7,7 +7,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Mic, Play, Pause } from 'lucide-react-native';
-import { colors, spacing, fontWeight, borderRadius, fontSize } from '@/constants/theme';
+import { colors, spacing, fontWeight, fontSize } from '@/constants/theme';
 import { formatDuration } from '@/lib';
 
 interface AudioMemoryProps {
@@ -22,10 +22,7 @@ export function AudioMemory({ duration, isPlaying, onTogglePlay }: AudioMemoryPr
       {/* Visualizer bars */}
       <View style={styles.audioVisualizer}>
         {[...Array(5)].map((_, i) => (
-          <Animated.View
-            key={i}
-            style={[styles.audioBar, { height: 20 + Math.random() * 40 }]}
-          />
+          <Animated.View key={i} style={[styles.audioBar, { height: 20 + Math.random() * 40 }]} />
         ))}
       </View>
 
@@ -112,4 +109,3 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
   },
 });
-

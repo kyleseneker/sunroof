@@ -12,7 +12,8 @@ jest.mock('@react-native-community/datetimepicker', () => {
   const { View } = require('react-native');
   return {
     __esModule: true,
-    default: (props: { testID?: string }) => React.createElement(View, { testID: props.testID || 'date-picker' }),
+    default: (props: { testID?: string }) =>
+      React.createElement(View, { testID: props.testID || 'date-picker' }),
   };
 });
 
@@ -32,17 +33,13 @@ describe('UnlockDatePicker', () => {
   });
 
   it('renders section label', () => {
-    const { getByText } = render(
-      <UnlockDatePicker value={testDate} onChange={mockOnChange} />
-    );
+    const { getByText } = render(<UnlockDatePicker value={testDate} onChange={mockOnChange} />);
 
-    expect(getByText('When should it unlock?')).toBeTruthy();
+    expect(getByText('When does your journey end?')).toBeTruthy();
   });
 
   it('renders formatted date', () => {
-    const { getByText } = render(
-      <UnlockDatePicker value={testDate} onChange={mockOnChange} />
-    );
+    const { getByText } = render(<UnlockDatePicker value={testDate} onChange={mockOnChange} />);
 
     // Check for formatted date (will vary based on locale/timezone)
     expect(getByText(/June.*2025/)).toBeTruthy();
@@ -64,17 +61,13 @@ describe('UnlockDatePicker', () => {
   });
 
   it('renders without crashing', () => {
-    const { toJSON } = render(
-      <UnlockDatePicker value={testDate} onChange={mockOnChange} />
-    );
+    const { toJSON } = render(<UnlockDatePicker value={testDate} onChange={mockOnChange} />);
 
     expect(toJSON()).toBeTruthy();
   });
 
   it('renders calendar icon', () => {
-    const { UNSAFE_root } = render(
-      <UnlockDatePicker value={testDate} onChange={mockOnChange} />
-    );
+    const { UNSAFE_root } = render(<UnlockDatePicker value={testDate} onChange={mockOnChange} />);
 
     // Just verify component renders
     expect(UNSAFE_root).toBeTruthy();

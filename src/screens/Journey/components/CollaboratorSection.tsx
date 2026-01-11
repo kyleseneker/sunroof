@@ -56,25 +56,18 @@ export function CollaboratorSection({
           </TouchableOpacity>
         )}
       </View>
-      <Text style={styles.collaboratorHint}>
-        They'll receive an invite when you save
-      </Text>
+      <Text style={styles.collaboratorHint}>They&apos;ll receive an invite when you save</Text>
       {collaborators.length > 0 && (
         <View style={styles.collaboratorsList}>
           {collaborators.map((collab) => (
-            <View 
-              key={collab.email} 
-              style={[
-                styles.collaboratorChip,
-                collab.isPending && styles.collaboratorChipPending,
-              ]}
+            <View
+              key={collab.email}
+              style={[styles.collaboratorChip, collab.isPending && styles.collaboratorChipPending]}
             >
               <Text style={styles.collaboratorEmail} numberOfLines={1}>
                 {collab.email}
               </Text>
-              {collab.isPending && (
-                <Text style={styles.pendingLabel}>invited</Text>
-              )}
+              {collab.isPending && <Text style={styles.pendingLabel}>invited</Text>}
               <TouchableOpacity
                 onPress={() => onRemoveCollaborator(collab.email)}
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
@@ -154,4 +147,3 @@ const styles = StyleSheet.create({
     fontWeight: fontWeight.medium,
   },
 });
-

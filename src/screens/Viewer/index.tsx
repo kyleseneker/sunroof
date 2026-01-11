@@ -18,7 +18,9 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { VideoRef } from 'react-native-video';
-import { createSound, type Sound } from 'react-native-nitro-sound';
+import { createSound } from 'react-native-nitro-sound';
+
+type SoundInstance = Awaited<ReturnType<typeof createSound>>;
 import Clipboard from '@react-native-clipboard/clipboard';
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import RNFS from 'react-native-fs';
@@ -74,7 +76,7 @@ export function ViewerScreen() {
   const [memoryTags, setMemoryTags] = useState<Record<string, string[]>>({});
 
   // Refs
-  const audioPlayerRef = useRef<Sound | null>(null);
+  const audioPlayerRef = useRef<SoundInstance | null>(null);
   const flatListRef = useRef<FlatList<Memory>>(null);
   const videoRef = useRef<VideoRef>(null);
 
@@ -142,38 +144,44 @@ export function ViewerScreen() {
   }, [currentIndex]);
 
   // FlatList viewability
-  const onViewableItemsChanged = useCallback(({ viewableItems }: { viewableItems: ViewToken[] }) => {
-    if (viewableItems.length > 0 && viewableItems[0].index !== null) {
-      setCurrentIndex(viewableItems[0].index);
-    }
-  }, []);
+  const onViewableItemsChanged = useCallback(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      if (viewableItems.length > 0 && viewableItems[0].index !== null) {
+        setCurrentIndex(viewableItems[0].index);
+      }
+    },
+    []
+  );
 
   const viewabilityConfig = useRef({
     itemVisiblePercentThreshold: 50,
   }).current;
 
   // Audio handlers
-  const playAudio = useCallback(async (memory: Memory) => {
-    if (!memory.url || !audioPlayerRef.current) return;
+  const playAudio = useCallback(
+    async (memory: Memory) => {
+      if (!memory.url || !audioPlayerRef.current) return;
 
-    try {
-      await audioPlayerRef.current.stopPlayer();
-      audioPlayerRef.current.removePlayBackListener();
+      try {
+        await audioPlayerRef.current.stopPlayer();
+        audioPlayerRef.current.removePlayBackListener();
 
-      await audioPlayerRef.current.startPlayer(memory.url);
-      setIsAudioPlaying(true);
+        await audioPlayerRef.current.startPlayer(memory.url);
+        setIsAudioPlaying(true);
 
-      audioPlayerRef.current.addPlayBackListener((e) => {
-        if (e.currentPosition >= e.duration) {
-          setIsAudioPlaying(false);
-          audioPlayerRef.current?.stopPlayer().catch(() => {});
-        }
-      });
-    } catch (err) {
-      log.error(' Audio error', { error: err });
-      showToast('Failed to play audio', 'error');
-    }
-  }, [showToast]);
+        audioPlayerRef.current.addPlayBackListener((e) => {
+          if (e.currentPosition >= e.duration) {
+            setIsAudioPlaying(false);
+            audioPlayerRef.current?.stopPlayer().catch(() => {});
+          }
+        });
+      } catch (err) {
+        log.error(' Audio error', { error: err });
+        showToast('Failed to play audio', 'error');
+      }
+    },
+    [showToast]
+  );
 
   const pauseAudio = useCallback(async () => {
     if (!audioPlayerRef.current) return;
@@ -363,9 +371,7 @@ export function ViewerScreen() {
       return (
         <View style={styles.memoryItem}>
           {/* Photo */}
-          {item.type === 'photo' && item.url && (
-            <PhotoMemory url={item.url} />
-          )}
+          {item.type === 'photo' && item.url && <PhotoMemory url={item.url} />}
 
           {/* Video */}
           {item.type === 'video' && item.url && (
@@ -549,4 +555,3 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
 });
-

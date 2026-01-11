@@ -22,6 +22,7 @@ jest.mock('@/lib', () => ({
     }
     return 'Jan 1';
   }),
+  hapticClick: jest.fn(),
 }));
 
 const mockJourney: Journey = {
@@ -46,25 +47,19 @@ describe('JourneyCard', () => {
   });
 
   it('renders journey name', () => {
-    const { getByText } = render(
-      <JourneyCard journey={mockJourney} onPress={mockOnPress} />
-    );
+    const { getByText } = render(<JourneyCard journey={mockJourney} onPress={mockOnPress} />);
 
     expect(getByText('Beach Vacation')).toBeTruthy();
   });
 
   it('renders journey emoji', () => {
-    const { getByText } = render(
-      <JourneyCard journey={mockJourney} onPress={mockOnPress} />
-    );
+    const { getByText } = render(<JourneyCard journey={mockJourney} onPress={mockOnPress} />);
 
     expect(getByText('🏖️')).toBeTruthy();
   });
 
   it('renders memory count', () => {
-    const { getByText } = render(
-      <JourneyCard journey={mockJourney} onPress={mockOnPress} />
-    );
+    const { getByText } = render(<JourneyCard journey={mockJourney} onPress={mockOnPress} />);
 
     expect(getByText('42 memories')).toBeTruthy();
   });
@@ -79,9 +74,7 @@ describe('JourneyCard', () => {
   });
 
   it('calls onPress when pressed', () => {
-    const { getByText } = render(
-      <JourneyCard journey={mockJourney} onPress={mockOnPress} />
-    );
+    const { getByText } = render(<JourneyCard journey={mockJourney} onPress={mockOnPress} />);
 
     fireEvent.press(getByText('Beach Vacation'));
 
@@ -89,9 +82,7 @@ describe('JourneyCard', () => {
   });
 
   it('shows recap badge when ai_recap exists', () => {
-    const { UNSAFE_root } = render(
-      <JourneyCard journey={mockJourney} onPress={mockOnPress} />
-    );
+    const { UNSAFE_root } = render(<JourneyCard journey={mockJourney} onPress={mockOnPress} />);
 
     // Just verify it renders without error
     expect(UNSAFE_root).toBeTruthy();
@@ -99,35 +90,27 @@ describe('JourneyCard', () => {
 
   it('hides recap badge when no ai_recap', () => {
     const noRecapJourney = { ...mockJourney, ai_recap: undefined };
-    const { toJSON } = render(
-      <JourneyCard journey={noRecapJourney} onPress={mockOnPress} />
-    );
+    const { toJSON } = render(<JourneyCard journey={noRecapJourney} onPress={mockOnPress} />);
 
     expect(toJSON()).toBeTruthy();
   });
 
   it('renders without cover image', () => {
     const noCoverJourney = { ...mockJourney, cover_image_url: undefined };
-    const { getByText } = render(
-      <JourneyCard journey={noCoverJourney} onPress={mockOnPress} />
-    );
+    const { getByText } = render(<JourneyCard journey={noCoverJourney} onPress={mockOnPress} />);
 
     expect(getByText('Beach Vacation')).toBeTruthy();
   });
 
   it('uses default emoji when none provided', () => {
     const noEmojiJourney = { ...mockJourney, emoji: undefined };
-    const { getByText } = render(
-      <JourneyCard journey={noEmojiJourney} onPress={mockOnPress} />
-    );
+    const { getByText } = render(<JourneyCard journey={noEmojiJourney} onPress={mockOnPress} />);
 
     expect(getByText('📸')).toBeTruthy();
   });
 
   it('renders date range', () => {
-    const { getByText } = render(
-      <JourneyCard journey={mockJourney} onPress={mockOnPress} />
-    );
+    const { getByText } = render(<JourneyCard journey={mockJourney} onPress={mockOnPress} />);
 
     expect(getByText(/Jan 1.*Jan 15, 2025/)).toBeTruthy();
   });

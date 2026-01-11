@@ -28,6 +28,20 @@ jest.mock('react-native-haptic-feedback', () => ({
   trigger: jest.fn(),
 }));
 
+// Mock react-native-biometrics
+jest.mock('react-native-biometrics', () => ({
+  __esModule: true,
+  default: jest.fn().mockImplementation(() => ({
+    isSensorAvailable: jest.fn(() => Promise.resolve({ available: false, biometryType: null })),
+    simplePrompt: jest.fn(() => Promise.resolve({ success: true })),
+  })),
+  BiometryTypes: {
+    TouchID: 'TouchID',
+    FaceID: 'FaceID',
+    Biometrics: 'Biometrics',
+  },
+}));
+
 // Mock @react-native-community/netinfo
 jest.mock('@react-native-community/netinfo', () => ({
   addEventListener: jest.fn(() => jest.fn()),

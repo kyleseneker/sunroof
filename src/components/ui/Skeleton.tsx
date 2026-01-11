@@ -3,7 +3,7 @@
  */
 
 import React, { useEffect, useRef } from 'react';
-import { View, StyleSheet, Animated, ViewStyle } from 'react-native';
+import { StyleSheet, Animated, ViewStyle } from 'react-native';
 import { colors, borderRadius } from '@/constants/theme';
 
 type SkeletonVariant = 'text' | 'circular' | 'rectangular';
@@ -19,12 +19,7 @@ interface SkeletonProps {
   style?: ViewStyle;
 }
 
-export function Skeleton({
-  variant = 'text',
-  width,
-  height,
-  style,
-}: SkeletonProps) {
+export function Skeleton({ variant = 'text', width, height, style }: SkeletonProps) {
   const shimmerAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

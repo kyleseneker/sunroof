@@ -25,7 +25,9 @@ import {
   useMicrophonePermission,
 } from 'react-native-vision-camera';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { createSound, type Sound } from 'react-native-nitro-sound';
+import { createSound } from 'react-native-nitro-sound';
+
+type SoundInstance = Awaited<ReturnType<typeof createSound>>;
 import RNFS from 'react-native-fs';
 import { useNavigation, useRoute, useFocusEffect, RouteProp } from '@react-navigation/native';
 import { Image as ImageIcon, SwitchCamera, Send, X } from 'lucide-react-native';
@@ -92,7 +94,7 @@ export function CameraScreen() {
   // Audio state
   const [isRecording, setIsRecording] = useState(false);
   const [recordingDuration, setRecordingDuration] = useState(0);
-  const audioRecorderRef = useRef<Sound | null>(null);
+  const audioRecorderRef = useRef<SoundInstance | null>(null);
   const recordingPathRef = useRef<string>('');
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -104,7 +106,7 @@ export function CameraScreen() {
   // Context
   const [locationContext, setLocationContext] = useState<MemoryLocation | null>(null);
   const [weatherContext, setWeatherContext] = useState<MemoryWeather | null>(null);
-  const [contextLoading, setContextLoading] = useState(true);
+  const [_contextLoading, setContextLoading] = useState(true);
 
   // Tags for capture
   const [captureTags, setCaptureTags] = useState<string[]>([]);
@@ -177,7 +179,7 @@ export function CameraScreen() {
       recordingPathRef.current = '';
       setIsRecording(false);
       setRecordingDuration(0);
-      
+
       // Refresh location context in background (non-blocking)
       (async () => {
         try {
@@ -196,7 +198,7 @@ export function CameraScreen() {
           // Ignore - location is optional
         }
       })();
-      
+
       return () => {
         if (timerRef.current) {
           clearInterval(timerRef.current);
@@ -344,7 +346,7 @@ export function CameraScreen() {
   const handleSaveNote = async () => {
     const trimmedNote = note.trim();
     if (!trimmedNote || !user?.id) return;
-    
+
     hapticClick();
 
     if (trimmedNote.length > MAX_NOTE_LENGTH) {
@@ -443,7 +445,9 @@ export function CameraScreen() {
         });
       }, 1000);
     } catch (err) {
-      log.error('Audio recording failed', { error: err instanceof Error ? err.message : String(err) });
+      log.error('Audio recording failed', {
+        error: err instanceof Error ? err.message : String(err),
+      });
       showToast('Failed to start recording', 'error');
     }
   };
@@ -738,7 +742,10 @@ export function CameraScreen() {
                 <TouchableOpacity
                   onPress={handleSaveNote}
                   disabled={!note.trim() || loading}
-                  style={[styles.saveNoteButton, (!note.trim() || loading) && styles.saveNoteButtonDisabled]}
+                  style={[
+                    styles.saveNoteButton,
+                    (!note.trim() || loading) && styles.saveNoteButtonDisabled,
+                  ]}
                   accessibilityLabel="Save note"
                   accessibilityRole="button"
                 >
@@ -853,4 +860,3 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
 });
-
