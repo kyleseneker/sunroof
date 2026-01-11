@@ -14,6 +14,10 @@ import {
   Scale,
   RefreshCw,
   Mail,
+  UserX,
+  Globe,
+  Sparkles,
+  Gavel,
 } from 'lucide-react-native';
 import { colors, spacing, fontSize, fontWeight, borderRadius } from '@/constants/theme';
 import { Background, Header, Hero } from '@/components/ui';
@@ -40,8 +44,21 @@ export function TermsScreen() {
         <View style={styles.sections}>
           <Section icon={<Shield size={18} color={colors.primary} />} title="Acceptance of Terms">
             <Text style={styles.text}>
-              By accessing or using Sunroof, you agree to be bound by these Terms of Service. If you
-              do not agree to these terms, please do not use the app.
+              By downloading, accessing, or using the Sunroof mobile application
+              (&quot;Service&quot;), you (&quot;User&quot; or &quot;you&quot;) agree to be legally
+              bound by these Terms of Service (&quot;Terms&quot;) and our Privacy Policy, which is
+              incorporated herein by reference. These Terms constitute a binding legal agreement
+              between you and Kyle Seneker (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;). If
+              you do not agree to these Terms, you must not access or use the Service.
+            </Text>
+          </Section>
+
+          <Section icon={<Users size={18} color={colors.primary} />} title="Eligibility">
+            <Text style={styles.text}>
+              Sunroof is not directed to children under 13 years of age. By accessing or using this
+              Service, you represent and warrant that you are at least 13 years old. If we learn
+              that we have collected personal information from a child under 13, we will take steps
+              to delete that information as soon as possible.
             </Text>
           </Section>
 
@@ -65,10 +82,19 @@ export function TermsScreen() {
           </Section>
 
           <Section icon={<Users size={18} color={colors.primary} />} title="User Content">
-            <SimpleBullet text="You retain all rights to the photos, videos, audio, and notes you create" />
-            <SimpleBullet text="You are responsible for all content you capture and upload" />
-            <SimpleBullet text="Do not upload content that violates any laws or third-party rights" />
-            <SimpleBullet text="Content shared in collaborative journeys is visible to all collaborators after unlock" />
+            <Text style={styles.text}>
+              You retain all ownership rights to the photos, videos, audio recordings, and text
+              notes (&quot;User Content&quot;) that you create using the Service. By uploading User
+              Content, you grant us a limited, non-exclusive, royalty-free license to store,
+              process, and display your User Content solely for the purpose of providing the Service
+              to you.
+            </Text>
+            <View style={styles.bulletList}>
+              <SimpleBullet text="You are solely responsible for all User Content you capture and upload" />
+              <SimpleBullet text="You represent and warrant that your User Content does not violate any applicable laws or infringe upon the rights of any third party" />
+              <SimpleBullet text="User Content shared in collaborative journeys will be visible to all designated collaborators after the unlock date" />
+              <SimpleBullet text="We do not claim ownership of your User Content and will not use it for any purpose other than providing the Service" />
+            </View>
           </Section>
 
           <Section icon={<AlertTriangle size={18} color={colors.primary} />} title="Acceptable Use">
@@ -82,21 +108,122 @@ export function TermsScreen() {
             </View>
           </Section>
 
-          <Section icon={<Scale size={18} color={colors.primary} />} title="Disclaimer & Liability">
+          <Section
+            icon={<Sparkles size={18} color={colors.primary} />}
+            title="Third-Party Services"
+          >
             <Text style={styles.text}>
-              The service is provided &quot;as is&quot; without warranties of any kind. While we
-              strive to keep your memories safe, we do not guarantee that the service will be
-              uninterrupted, secure, or error-free. We recommend keeping copies of important
-              memories. To the maximum extent permitted by law, we shall not be liable for any loss
-              of data or indirect damages.
+              Sunroof integrates with third-party services to provide its features:
+            </Text>
+            <View style={styles.bulletList}>
+              <SimpleBullet text="Supabase for authentication, database, and file storage" />
+              <SimpleBullet text="OpenAI for AI-powered journey recaps (text notes only)" />
+              <SimpleBullet text="OpenWeather for weather data" />
+              <SimpleBullet text="Unsplash for journey cover images" />
+            </View>
+            <Text style={styles.text}>
+              We are not responsible for the availability, accuracy, or practices of these
+              third-party services. Your use of these features is subject to the respective
+              third-party terms.
             </Text>
           </Section>
 
-          <Section icon={<RefreshCw size={18} color={colors.primary} />} title="Changes to Terms">
+          <Section
+            icon={<Scale size={18} color={colors.primary} />}
+            title="Disclaimer of Warranties"
+          >
+            <Text style={[styles.text, { marginBottom: 12 }]}>
+              THE SERVICE IS PROVIDED ON AN &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; BASIS
+              WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+              TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+              NON-INFRINGEMENT.
+            </Text>
+            <Text style={[styles.text, { marginBottom: 8 }]}>
+              We do not warrant that the Service will be uninterrupted, secure, or error-free, or
+              that any defects will be corrected.
+            </Text>
             <Text style={styles.text}>
-              We reserve the right to modify these terms at any time. We will notify you of
-              significant changes through the app. Continued use of the service after changes
-              constitutes acceptance of the new terms.
+              You acknowledge that you use the Service at your own risk. We strongly recommend
+              maintaining independent copies of any content that is important to you.
+            </Text>
+          </Section>
+
+          <Section
+            icon={<Scale size={18} color={colors.primary} />}
+            title="Limitation of Liability"
+          >
+            <Text style={[styles.text, { marginBottom: 12 }]}>
+              TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL KYLE SENEKER OR
+              SUNROOF BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE
+              DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF DATA, LOSS OF PROFITS, OR LOSS OF
+              GOODWILL, ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE SERVICE, WHETHER BASED
+              ON WARRANTY, CONTRACT, TORT, OR ANY OTHER LEGAL THEORY, EVEN IF WE HAVE BEEN ADVISED
+              OF THE POSSIBILITY OF SUCH DAMAGES.
+            </Text>
+            <Text style={styles.text}>
+              Our total liability for any claims arising from these Terms or your use of the Service
+              shall not exceed the amount you paid us, if any, in the twelve (12) months preceding
+              the claim.
+            </Text>
+          </Section>
+
+          <Section icon={<UserX size={18} color={colors.primary} />} title="Account Termination">
+            <Text style={styles.text}>
+              We reserve the right to suspend or terminate your account if you violate these Terms
+              or engage in conduct that we determine, in our sole discretion, to be harmful to other
+              users, us, or third parties. You may delete your account at any time through the app
+              settings. Upon deletion, all your data including journeys and memories will be
+              permanently removed.
+            </Text>
+          </Section>
+
+          <Section icon={<Gavel size={18} color={colors.primary} />} title="Indemnification">
+            <Text style={styles.text}>
+              You agree to indemnify, defend, and hold harmless Kyle Seneker, and his affiliates,
+              officers, agents, and employees, from and against any and all claims, liabilities,
+              damages, losses, costs, and expenses (including reasonable attorneys&apos; fees)
+              arising out of or in any way connected with: (a) your access to or use of the Service;
+              (b) your User Content; (c) your violation of these Terms; or (d) your violation of any
+              rights of any third party.
+            </Text>
+          </Section>
+
+          <Section icon={<Globe size={18} color={colors.primary} />} title="Governing Law">
+            <Text style={styles.text}>
+              These Terms shall be governed by and construed in accordance with the laws of the
+              State of California, United States, without regard to its conflict of law provisions.
+              Any disputes arising from these Terms or your use of Sunroof shall be resolved in the
+              courts located in California.
+            </Text>
+          </Section>
+
+          <Section
+            icon={<RefreshCw size={18} color={colors.primary} />}
+            title="Modifications to Terms"
+          >
+            <Text style={styles.text}>
+              We reserve the right to modify these Terms at any time in our sole discretion. If we
+              make material changes, we will notify you by posting the updated Terms within the
+              Service and updating the &quot;Last updated&quot; date above. Your continued use of
+              the Service following the posting of revised Terms constitutes your acceptance of such
+              changes. If you do not agree to the modified Terms, you must discontinue your use of
+              the Service.
+            </Text>
+          </Section>
+
+          <Section icon={<FileText size={18} color={colors.primary} />} title="Severability">
+            <Text style={styles.text}>
+              If any provision of these Terms is held to be invalid, illegal, or unenforceable by a
+              court of competent jurisdiction, such invalidity shall not affect the validity of the
+              remaining provisions, which shall remain in full force and effect.
+            </Text>
+          </Section>
+
+          <Section icon={<FileText size={18} color={colors.primary} />} title="Entire Agreement">
+            <Text style={styles.text}>
+              These Terms, together with our Privacy Policy, constitute the entire agreement between
+              you and Kyle Seneker regarding your use of the Service and supersede all prior
+              agreements, understandings, and communications, whether written or oral.
             </Text>
           </Section>
 
