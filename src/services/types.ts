@@ -1,0 +1,9 @@
+/**
+ * Service result type
+ */
+
+export interface ServiceResult<T> {
+  data: T | null;
+  error: string | null;
+}
+

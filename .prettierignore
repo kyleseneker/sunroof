@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+android/
+ios/
+.expo/
+dist/
+web-build/
+
+# Generated files
+*.d.ts
+*.lock
+package-lock.json
+
+# IDE
+.idea/
+.vscode/
+
+# Misc
+coverage/
+.jest/
+
