@@ -3,8 +3,8 @@
  * Individual memory thumbnail in the gallery grid
  */
 
-import React, { memo } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import React, { memo, useMemo } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, useWindowDimensions, Platform } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Play, Quote, CheckCircle2 } from 'lucide-react-native';
 import { colors, spacing, fontSize, fontWeight, borderRadius } from '@/constants/theme';
@@ -12,9 +12,23 @@ import { CachedImage } from '@/components/ui';
 import { formatDuration, hapticClick } from '@/lib';
 import type { Memory } from '@/types';
 
-const { width } = Dimensions.get('window');
-// Account for: screen padding (lg*2) + day card padding (sm*2) + day card border (2) + gap between cards (md)
-const ITEM_SIZE = (width - spacing.lg * 2 - spacing.sm * 2 - 2 - spacing.md) / 2;
+const TABLET_BREAKPOINT = 768;
+const MAX_GALLERY_WIDTH = 700; // Max width for gallery content on tablets
+
+function useItemSize() {
+  const { width: screenWidth } = useWindowDimensions();
+  
+  return useMemo(() => {
+    const isTablet = Platform.OS === 'ios' && screenWidth >= TABLET_BREAKPOINT;
+    // Use constrained width on tablets for better layout
+    const effectiveWidth = isTablet ? Math.min(screenWidth, MAX_GALLERY_WIDTH) : screenWidth;
+    // On tablets in landscape, show 3 columns instead of 2
+    const columns = isTablet && screenWidth > 1000 ? 3 : 2;
+    // Account for: screen padding (lg*2) + day card padding (sm*2) + day card border (2) + gaps between cards (md*(columns-1))
+    const size = (effectiveWidth - spacing.lg * 2 - spacing.sm * 2 - 2 - spacing.md * (columns - 1)) / columns;
+    return size;
+  }, [screenWidth]);
+}
 
 interface MemoryCardProps {
   memory: Memory;
@@ -33,6 +47,8 @@ export const MemoryCard = memo(function MemoryCard({
   onPress,
   onLongPress,
 }: MemoryCardProps) {
+  const itemSize = useItemSize();
+  
   const handlePress = () => {
     hapticClick();
     onPress();
@@ -47,7 +63,7 @@ export const MemoryCard = memo(function MemoryCard({
     <TouchableOpacity
       onPress={handlePress}
       onLongPress={handleLongPress}
-      style={[styles.memoryCard, isSelected && styles.memoryCardSelected]}
+      style={[styles.memoryCard, { width: itemSize, height: itemSize }, isSelected && styles.memoryCardSelected]}
       activeOpacity={0.8}
       accessibilityLabel={`${memory.type} memory at ${timeStr}`}
       accessibilityRole="button"
@@ -121,8 +137,6 @@ export const MemoryCard = memo(function MemoryCard({
 
 const styles = StyleSheet.create({
   memoryCard: {
-    width: ITEM_SIZE,
-    height: ITEM_SIZE,
     borderRadius: borderRadius.xl,
     overflow: 'hidden',
     shadowColor: '#000',

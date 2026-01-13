@@ -4,15 +4,12 @@
  */
 
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Sparkles, Calendar } from 'lucide-react-native';
 import { colors, spacing, fontSize, fontWeight, borderRadius } from '@/constants/theme';
 import { formatDate, hapticClick } from '@/lib';
 import type { Journey } from '@/types';
-
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const CARD_WIDTH = SCREEN_WIDTH - spacing.lg * 2;
 
 interface JourneyCardProps {
   journey: Journey;
@@ -88,7 +85,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
   },
   journeyCard: {
-    width: CARD_WIDTH,
+    width: '100%',
     height: 200,
     borderRadius: borderRadius.xl,
     overflow: 'hidden',

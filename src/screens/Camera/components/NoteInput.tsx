@@ -112,6 +112,9 @@ const styles = StyleSheet.create({
     paddingTop: 100,
     paddingHorizontal: spacing.lg,
     paddingBottom: 180,
+    maxWidth: 500,
+    width: '100%',
+    alignSelf: 'center',
   },
   noteInput: {
     flex: 1,

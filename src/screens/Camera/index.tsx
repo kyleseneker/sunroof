@@ -822,6 +822,9 @@ const styles = StyleSheet.create({
   controlsContent: {
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.xl,
+    maxWidth: 500,
+    width: '100%',
+    alignSelf: 'center',
   },
   actionRow: {
     flexDirection: 'row',

@@ -452,6 +452,9 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: spacing.lg,
+    maxWidth: 500,
+    width: '100%',
+    alignSelf: 'center',
   },
   version: {
     fontSize: fontSize.sm,

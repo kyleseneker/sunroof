@@ -751,6 +751,9 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: spacing.lg,
+    maxWidth: 700,
+    width: '100%',
+    alignSelf: 'center',
   },
   loadingContainer: {
     height: 200,

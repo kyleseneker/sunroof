@@ -33,7 +33,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 export function LoginScreen() {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<NavigationProp>();
-  const { signInWithEmail, signInWithGoogle } = useAuth();
+  const { signInWithEmail, signInWithGoogle, signInWithApple } = useAuth();
 
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -90,6 +90,22 @@ export function LoginScreen() {
       log.info('Google sign-in successful');
     }
   }, [signInWithGoogle]);
+
+  const handleAppleSignIn = useCallback(async () => {
+    setEmailError(null);
+    log.info('Apple sign-in attempt');
+    setIsLoading(true);
+    const { error } = await signInWithApple();
+    setIsLoading(false);
+
+    if (error) {
+      log.warn('Apple sign-in failed', { error: error.message });
+      setEmailError(error.message);
+      hapticError();
+    } else {
+      log.info('Apple sign-in successful');
+    }
+  }, [signInWithApple]);
 
   // OTP handlers
   const handleOtpChange = useCallback(
@@ -234,6 +250,7 @@ export function LoginScreen() {
                   isLoading={isLoading}
                   onEmailSubmit={handleEmailSignIn}
                   onGoogleSignIn={handleGoogleSignIn}
+                  onAppleSignIn={handleAppleSignIn}
                 />
               )}
             </View>

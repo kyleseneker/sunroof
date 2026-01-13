@@ -29,6 +29,8 @@ interface ButtonProps {
   icon?: React.ReactNode;
   style?: ViewStyle;
   textStyle?: TextStyle;
+  /** Override spinner color when loading */
+  spinnerColor?: string;
   /** Accessibility label - defaults to title if not provided */
   accessibilityLabel?: string;
   /** Accessibility hint describing what happens when pressed */
@@ -48,6 +50,7 @@ export function Button({
   icon,
   style,
   textStyle,
+  spinnerColor,
   accessibilityLabel,
   accessibilityHint,
   testID,
@@ -194,7 +197,7 @@ export function Button({
     >
       {loading ? (
         <ActivityIndicator
-          color={variantStyles.text.color}
+          color={spinnerColor ?? variantStyles.text.color}
           size="small"
           accessibilityLabel="Loading"
         />

@@ -353,6 +353,9 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: spacing.lg,
+    maxWidth: 500,
+    width: '100%',
+    alignSelf: 'center',
   },
   formCard: {
     backgroundColor: colors.overlay.dark,

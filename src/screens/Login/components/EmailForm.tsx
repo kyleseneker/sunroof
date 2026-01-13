@@ -1,13 +1,14 @@
 /**
  * Email Form
- * Email input with continue and Google buttons
+ * Email input with continue, Apple, and Google buttons
  */
 
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import { Mail } from 'lucide-react-native';
 import { colors, spacing, fontSize, borderRadius } from '@/constants/theme';
 import { Button, Input } from '@/components/ui';
+import { AppleLogo } from './AppleLogo';
 import { GoogleLogo } from './GoogleLogo';
 
 interface EmailFormProps {
@@ -17,6 +18,7 @@ interface EmailFormProps {
   isLoading: boolean;
   onEmailSubmit: () => void;
   onGoogleSignIn: () => void;
+  onAppleSignIn: () => void;
 }
 
 export function EmailForm({
@@ -26,6 +28,7 @@ export function EmailForm({
   isLoading,
   onEmailSubmit,
   onGoogleSignIn,
+  onAppleSignIn,
 }: EmailFormProps) {
   const handleEmailChange = (text: string) => {
     onEmailChange(text);
@@ -67,6 +70,22 @@ export function EmailForm({
         <Text style={styles.dividerText}>or</Text>
         <View style={styles.dividerLine} />
       </View>
+
+      {/* Apple Sign-in - iOS only */}
+      {Platform.OS === 'ios' && (
+        <Button
+          title="Continue with Apple"
+          onPress={onAppleSignIn}
+          variant="secondary"
+          size="lg"
+          loading={isLoading}
+          fullWidth
+          icon={<AppleLogo size={22} color="#000000" />}
+          style={styles.appleButton}
+          textStyle={styles.appleButtonText}
+          spinnerColor="#000000"
+        />
+      )}
 
       <Button
         title="Continue with Google"
@@ -124,6 +143,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 12,
     elevation: 8,
+  },
+  appleButton: {
+    backgroundColor: colors.white,
+    marginBottom: spacing.sm,
+    borderWidth: 1,
+    borderColor: colors.white,
+  },
+  appleButtonText: {
+    color: '#000000',
   },
   googleButton: {
     backgroundColor: colors.overlay.dark,

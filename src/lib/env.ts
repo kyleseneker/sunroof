@@ -38,13 +38,12 @@ export const env = {
   SUPABASE_URL: getEnvVar('SUPABASE_URL'),
   SUPABASE_ANON_KEY: getEnvVar('SUPABASE_ANON_KEY'),
 
+  // OAuth
+  GOOGLE_IOS_CLIENT_ID: getOptionalEnvVar('GOOGLE_IOS_CLIENT_ID', ''),
+  GOOGLE_WEB_CLIENT_ID: getOptionalEnvVar('GOOGLE_WEB_CLIENT_ID', ''),
+
   // External APIs (optional - features degrade gracefully)
   UNSPLASH_ACCESS_KEY: getOptionalEnvVar('UNSPLASH_ACCESS_KEY', ''),
-  OPENWEATHERMAP_API_KEY: getOptionalEnvVar('OPENWEATHERMAP_API_KEY', ''),
-
-  // Feature flags
-  ENABLE_ANALYTICS: getOptionalEnvVar('ENABLE_ANALYTICS', 'false') === 'true',
-  ENABLE_CRASH_REPORTING: getOptionalEnvVar('ENABLE_CRASH_REPORTING', 'false') === 'true',
 } as const;
 
 /**

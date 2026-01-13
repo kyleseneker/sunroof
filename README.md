@@ -15,7 +15,7 @@ A "delayed camera" time capsule app for capturing memories during journeys. Phot
 - 🔒 **Time Capsule** - Memories stay locked until the journey unlock date
 - 👥 **Collaboration** - Invite others to contribute memories to shared journeys
 - 🤖 **AI Recap** - Generate AI-powered recaps of your journeys
-- 🔐 **Secure Auth** - Google OAuth and email magic links via Supabase
+- 🔐 **Secure Auth** - Sign in with Apple, Google, or email magic links via Supabase
 
 ## Tech Stack
 
@@ -24,6 +24,7 @@ A "delayed camera" time capsule app for capturing memories during journeys. Phot
 | Framework | React Native 0.81 (bare workflow) |
 | Language | TypeScript |
 | Backend | Supabase (Auth, Database, Storage, Edge Functions) |
+| Auth | Sign in with Apple, Google Sign-in |
 | Navigation | React Navigation 7 |
 | Camera | react-native-vision-camera |
 | Audio | react-native-nitro-sound |
@@ -132,9 +133,15 @@ src/
 Create a `.env` file with the following:
 
 ```env
+# Required
 SUPABASE_URL=your_supabase_project_url
 SUPABASE_ANON_KEY=your_supabase_anon_key
-OPENWEATHER_API_KEY=your_openweather_api_key
+
+# Optional - Google Sign-in
+GOOGLE_IOS_CLIENT_ID=your_ios_client_id.apps.googleusercontent.com
+GOOGLE_WEB_CLIENT_ID=your_web_client_id.apps.googleusercontent.com
+
+# Optional - Unsplash (for journey cover images)
 UNSPLASH_ACCESS_KEY=your_unsplash_access_key
 ```
 

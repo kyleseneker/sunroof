@@ -461,14 +461,20 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: spacing.lg,
+    maxWidth: 600,
+    width: '100%',
+    alignSelf: 'center',
   },
   emptyContainer: {
     flex: 1,
     paddingHorizontal: spacing.lg,
+    maxWidth: 600,
+    width: '100%',
+    alignSelf: 'center',
   },
   mainContent: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   pagination: {
     marginTop: spacing.md,
