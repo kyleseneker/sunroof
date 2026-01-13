@@ -44,7 +44,10 @@ export function JourneyCard({ journey, onPress, isFirst }: JourneyCardProps) {
             style={styles.journeyImage}
           />
         )}
-        <LinearGradient colors={['transparent', 'rgba(0,0,0,0.8)']} style={styles.journeyGradient} />
+        <LinearGradient
+          colors={['transparent', 'rgba(0,0,0,0.8)']}
+          style={styles.journeyGradient}
+        />
         <View style={styles.journeyContent}>
           <View style={styles.journeyTop}>
             {journey.ai_recap && (
@@ -54,7 +57,8 @@ export function JourneyCard({ journey, onPress, isFirst }: JourneyCardProps) {
             )}
             <View style={styles.journeyBadge}>
               <Text style={styles.journeyBadgeText}>
-                {journey.memory_count || 0} {(journey.memory_count || 0) === 1 ? 'memory' : 'memories'}
+                {journey.memory_count || 0}{' '}
+                {(journey.memory_count || 0) === 1 ? 'memory' : 'memories'}
               </Text>
             </View>
           </View>
@@ -66,7 +70,11 @@ export function JourneyCard({ journey, onPress, isFirst }: JourneyCardProps) {
                 <Calendar size={12} color="rgba(255,255,255,0.6)" />
                 <Text style={styles.journeyDate}>
                   {formatDate(journey.created_at, { month: 'short', day: 'numeric' })} –{' '}
-                  {formatDate(journey.unlock_date, { month: 'short', day: 'numeric', year: 'numeric' })}
+                  {formatDate(journey.unlock_date, {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
                 </Text>
               </View>
             )}
@@ -162,4 +170,3 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.7)',
   },
 });
-

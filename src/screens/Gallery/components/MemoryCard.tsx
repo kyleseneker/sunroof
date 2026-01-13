@@ -4,7 +4,14 @@
  */
 
 import React, { memo, useMemo } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, useWindowDimensions, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  useWindowDimensions,
+  Platform,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Play, Quote, CheckCircle2 } from 'lucide-react-native';
 import { colors, spacing, fontSize, fontWeight, borderRadius } from '@/constants/theme';
@@ -17,7 +24,7 @@ const MAX_GALLERY_WIDTH = 700; // Max width for gallery content on tablets
 
 function useItemSize() {
   const { width: screenWidth } = useWindowDimensions();
-  
+
   return useMemo(() => {
     const isTablet = Platform.OS === 'ios' && screenWidth >= TABLET_BREAKPOINT;
     // Use constrained width on tablets for better layout
@@ -25,7 +32,8 @@ function useItemSize() {
     // On tablets in landscape, show 3 columns instead of 2
     const columns = isTablet && screenWidth > 1000 ? 3 : 2;
     // Account for: screen padding (lg*2) + day card padding (sm*2) + day card border (2) + gaps between cards (md*(columns-1))
-    const size = (effectiveWidth - spacing.lg * 2 - spacing.sm * 2 - 2 - spacing.md * (columns - 1)) / columns;
+    const size =
+      (effectiveWidth - spacing.lg * 2 - spacing.sm * 2 - 2 - spacing.md * (columns - 1)) / columns;
     return size;
   }, [screenWidth]);
 }
@@ -48,7 +56,7 @@ export const MemoryCard = memo(function MemoryCard({
   onLongPress,
 }: MemoryCardProps) {
   const itemSize = useItemSize();
-  
+
   const handlePress = () => {
     hapticClick();
     onPress();
@@ -63,7 +71,11 @@ export const MemoryCard = memo(function MemoryCard({
     <TouchableOpacity
       onPress={handlePress}
       onLongPress={handleLongPress}
-      style={[styles.memoryCard, { width: itemSize, height: itemSize }, isSelected && styles.memoryCardSelected]}
+      style={[
+        styles.memoryCard,
+        { width: itemSize, height: itemSize },
+        isSelected && styles.memoryCardSelected,
+      ]}
       activeOpacity={0.8}
       accessibilityLabel={`${memory.type} memory at ${timeStr}`}
       accessibilityRole="button"
@@ -287,4 +299,3 @@ const styles = StyleSheet.create({
     marginLeft: 2,
   },
 });
-

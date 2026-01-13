@@ -55,4 +55,3 @@ export function validateEnv(): void {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const _ = env.SUPABASE_URL;
 }
-

@@ -2,7 +2,14 @@
  * Authentication Provider for React Native
  */
 
-import React, { createContext, useContext, useEffect, useState, useCallback, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  ReactNode,
+} from 'react';
 import { Linking, Platform } from 'react-native';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -49,7 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const handleAuthChange = useCallback((event: AuthChangeEvent, session: Session | null) => {
     log.debug(' Auth state changed', { event, hasSession: !!session });
-    
+
     setSession(session);
     setUser(session?.user ?? null);
     setLoading(false);
@@ -65,13 +72,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const params = new URLSearchParams(hashPart);
           const accessToken = params.get('access_token');
           const refreshToken = params.get('refresh_token');
-          
+
           if (accessToken && refreshToken) {
             const { error } = await supabase.auth.setSession({
               access_token: accessToken,
               refresh_token: refreshToken,
             });
-            
+
             if (error) {
               log.error(' Set session error', { error: error.message });
             } else {
@@ -90,7 +97,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Get initial session
     const initSession = async () => {
       try {
-        const { data: { session }, error } = await supabase.auth.getSession();
+        const {
+          data: { session },
+          error,
+        } = await supabase.auth.getSession();
         if (error) {
           log.error(' Get session error', { error: error.message });
         } else {
@@ -109,13 +119,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     initSession();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(handleAuthChange);
-    
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(handleAuthChange);
+
     // Listen for deep links
     const linkingSubscription = Linking.addEventListener('url', ({ url }) => {
       handleDeepLink(url);
     });
-    
+
     // Check if app was opened via deep link
     Linking.getInitialURL().then((url) => {
       if (url) {
@@ -154,7 +166,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Trigger native Google Sign-in
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
-      
+
       // User cancelled
       if (response.type === 'cancelled') {
         log.debug('Google sign in cancelled by user');
@@ -182,7 +194,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unknown error';
       // User cancelled - not an error, just return silently
-      if (message.includes('canceled') || message.includes('cancelled') || message.includes('SIGN_IN_CANCELLED')) {
+      if (
+        message.includes('canceled') ||
+        message.includes('cancelled') ||
+        message.includes('SIGN_IN_CANCELLED')
+      ) {
         log.debug('Google sign in cancelled by user');
         return { error: null };
       }
@@ -233,7 +249,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unknown error';
       // User cancelled - not an error, just return silently
-      if (message.includes('canceled') || message.includes('cancelled') || message.includes('1001')) {
+      if (
+        message.includes('canceled') ||
+        message.includes('cancelled') ||
+        message.includes('1001')
+      ) {
         log.debug('Apple sign in cancelled by user');
         return { error: null };
       }
@@ -253,7 +273,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, signInWithEmail, signInWithGoogle, signInWithApple, signOut }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        session,
+        loading,
+        signInWithEmail,
+        signInWithGoogle,
+        signInWithApple,
+        signOut,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

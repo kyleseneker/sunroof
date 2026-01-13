@@ -119,45 +119,48 @@ export function HomeScreen() {
   }, [showActionSheet, pendingAction]);
 
   // Load journeys from network and update cache
-  const loadJourneys = useCallback(async (force = false) => {
-    if (!user?.id) return;
+  const loadJourneys = useCallback(
+    async (force = false) => {
+      if (!user?.id) return;
 
-    // Skip if data is fresh (less than 30 seconds old) and not forced
-    if (!force) {
-      const lastFetch = getLastFetchTime(user.id);
-      if (lastFetch && Date.now() - lastFetch < 30000) {
-        // Data is fresh, just ensure we're not loading
+      // Skip if data is fresh (less than 30 seconds old) and not forced
+      if (!force) {
+        const lastFetch = getLastFetchTime(user.id);
+        if (lastFetch && Date.now() - lastFetch < 30000) {
+          // Data is fresh, just ensure we're not loading
+          setIsLoading(false);
+          setRefreshing(false);
+          BootSplash.hide({ fade: true });
+          return;
+        }
+      }
+
+      try {
+        const [activeResult, pastResult] = await Promise.all([
+          fetchActiveJourneys(user.id),
+          fetchPastJourneys(user.id),
+        ]);
+
+        if (activeResult.data) {
+          setActiveJourneys(activeResult.data);
+          setCachedActiveJourneys(user.id, activeResult.data);
+        }
+        if (pastResult.data) {
+          setPastJourneys(pastResult.data);
+          setCachedPastJourneys(user.id, pastResult.data);
+        }
+      } catch (error) {
+        log.error('Load journeys error', { error });
+        showToast('Failed to load journeys', 'error');
+      } finally {
         setIsLoading(false);
         setRefreshing(false);
+        // Hide splash screen once home data is loaded
         BootSplash.hide({ fade: true });
-        return;
       }
-    }
-
-    try {
-      const [activeResult, pastResult] = await Promise.all([
-        fetchActiveJourneys(user.id),
-        fetchPastJourneys(user.id),
-      ]);
-
-      if (activeResult.data) {
-        setActiveJourneys(activeResult.data);
-        setCachedActiveJourneys(user.id, activeResult.data);
-      }
-      if (pastResult.data) {
-        setPastJourneys(pastResult.data);
-        setCachedPastJourneys(user.id, pastResult.data);
-      }
-    } catch (error) {
-      log.error('Load journeys error', { error });
-      showToast('Failed to load journeys', 'error');
-    } finally {
-      setIsLoading(false);
-      setRefreshing(false);
-      // Hide splash screen once home data is loaded
-      BootSplash.hide({ fade: true });
-    }
-  }, [user?.id, showToast]);
+    },
+    [user?.id, showToast]
+  );
 
   // Initial load - use cache if available
   useEffect(() => {
@@ -275,11 +278,11 @@ export function HomeScreen() {
         .activeOffsetX([-20, 20])
         .onEnd((event) => {
           if (activeJourneys.length <= 1) return;
-          
+
           const { translationX, velocityX } = event;
           const swipeThreshold = 50;
           const velocityThreshold = 500;
-          
+
           // Swipe left (next journey)
           if (translationX < -swipeThreshold || velocityX < -velocityThreshold) {
             if (currentIndex < activeJourneys.length - 1) {
@@ -327,7 +330,14 @@ export function HomeScreen() {
       <Background
         imageUrl={currentJourney?.cover_image_url}
         unsplashQuery={!currentJourney ? 'warm sunset mountain landscape' : undefined}
-        gradient={currentJourney ? [getJourneyGradient(currentJourney.name).start, getJourneyGradient(currentJourney.name).end] : undefined}
+        gradient={
+          currentJourney
+            ? [
+                getJourneyGradient(currentJourney.name).start,
+                getJourneyGradient(currentJourney.name).end,
+              ]
+            : undefined
+        }
       />
 
       <GestureDetector gesture={swipeGesture}>
@@ -338,7 +348,11 @@ export function HomeScreen() {
             { paddingTop: insets.top, paddingBottom: insets.bottom },
           ]}
           refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.white} />
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor={colors.white}
+            />
           }
         >
           <HomeHeader
@@ -445,7 +459,6 @@ export function HomeScreen() {
           },
         ]}
       />
-
     </View>
   );
 }
@@ -480,4 +493,3 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
   },
 });
-

@@ -17,12 +17,7 @@ import type { Journey, RootStackParamList } from '@/types';
 
 const log = createLogger('Vault');
 
-import {
-  VaultHero,
-  JourneyCard,
-  LockedJourneyCard,
-  VaultSection,
-} from './components';
+import { VaultHero, JourneyCard, LockedJourneyCard, VaultSection } from './components';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -76,9 +71,7 @@ export function VaultScreen() {
   const unlockedJourneys = journeys.filter(
     (j) => j.unlock_date && j.status && isJourneyUnlocked(j)
   );
-  const lockedJourneys = journeys.filter(
-    (j) => j.unlock_date && j.status && !isJourneyUnlocked(j)
-  );
+  const lockedJourneys = journeys.filter((j) => j.unlock_date && j.status && !isJourneyUnlocked(j));
 
   return (
     <View style={styles.container}>
@@ -87,10 +80,7 @@ export function VaultScreen() {
 
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={[
-          styles.content,
-          { paddingBottom: insets.bottom + spacing.xxl },
-        ]}
+        contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + spacing.xxl }]}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.white} />
         }
@@ -149,4 +139,3 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 });
-

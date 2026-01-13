@@ -164,13 +164,9 @@ export function MemoriesScreen() {
     setIsDeleting(true);
 
     // Delete all memories in parallel
-    const results = await Promise.allSettled(
-      Array.from(selectedIds).map((id) => deleteMemory(id))
-    );
+    const results = await Promise.allSettled(Array.from(selectedIds).map((id) => deleteMemory(id)));
 
-    const successCount = results.filter(
-      (r) => r.status === 'fulfilled' && !r.value.error
-    ).length;
+    const successCount = results.filter((r) => r.status === 'fulfilled' && !r.value.error).length;
 
     const failedCount = results.length - successCount;
     if (failedCount > 0) {
@@ -279,7 +275,10 @@ export function MemoriesScreen() {
 
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + spacing.xl }]}
+        contentContainerStyle={[
+          styles.scrollContent,
+          { paddingBottom: insets.bottom + spacing.xl },
+        ]}
         showsVerticalScrollIndicator={false}
       >
         {/* Hero */}
@@ -384,4 +383,3 @@ const styles = StyleSheet.create({
     borderColor: colors.overlay.light,
   },
 });
-

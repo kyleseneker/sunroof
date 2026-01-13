@@ -19,20 +19,20 @@ A "delayed camera" time capsule app for capturing memories during journeys. Phot
 
 ## Tech Stack
 
-| Category | Technology |
-|----------|------------|
-| Framework | React Native 0.81 (bare workflow) |
-| Language | TypeScript |
-| Backend | Supabase (Auth, Database, Storage, Edge Functions) |
-| Auth | Sign in with Apple, Google Sign-in |
-| Navigation | React Navigation 7 |
-| Camera | react-native-vision-camera |
-| Audio | react-native-nitro-sound |
-| Video | react-native-video |
-| UI | Custom components, react-native-linear-gradient |
-| Icons | Lucide React Native |
-| Testing | Jest, React Testing Library |
-| Linting | ESLint, Prettier, Husky |
+| Category   | Technology                                         |
+| ---------- | -------------------------------------------------- |
+| Framework  | React Native 0.81 (bare workflow)                  |
+| Language   | TypeScript                                         |
+| Backend    | Supabase (Auth, Database, Storage, Edge Functions) |
+| Auth       | Sign in with Apple, Google Sign-in                 |
+| Navigation | React Navigation 7                                 |
+| Camera     | react-native-vision-camera                         |
+| Audio      | react-native-nitro-sound                           |
+| Video      | react-native-video                                 |
+| UI         | Custom components, react-native-linear-gradient    |
+| Icons      | Lucide React Native                                |
+| Testing    | Jest, React Testing Library                        |
+| Linting    | ESLint, Prettier, Husky                            |
 
 ## Getting Started
 
@@ -114,19 +114,19 @@ src/
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm start` | Start Metro bundler |
-| `npm run ios` | Run on iOS simulator |
-| `npm run android` | Run on Android emulator |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Run ESLint with auto-fix |
-| `npm run format` | Format code with Prettier |
-| `npm run typecheck` | Run TypeScript type checking |
-| `npm run test` | Run tests |
-| `npm run test:coverage` | Run tests with coverage report |
-| `npm run clean` | Clean build artifacts and reinstall pods |
-| `npm run db:types` | Generate TypeScript types from Supabase schema |
+| Command                 | Description                                    |
+| ----------------------- | ---------------------------------------------- |
+| `npm start`             | Start Metro bundler                            |
+| `npm run ios`           | Run on iOS simulator                           |
+| `npm run android`       | Run on Android emulator                        |
+| `npm run lint`          | Run ESLint                                     |
+| `npm run lint:fix`      | Run ESLint with auto-fix                       |
+| `npm run format`        | Format code with Prettier                      |
+| `npm run typecheck`     | Run TypeScript type checking                   |
+| `npm run test`          | Run tests                                      |
+| `npm run test:coverage` | Run tests with coverage report                 |
+| `npm run clean`         | Clean build artifacts and reinstall pods       |
+| `npm run db:types`      | Generate TypeScript types from Supabase schema |
 
 ## Environment Variables
 

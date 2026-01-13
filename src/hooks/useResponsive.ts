@@ -26,22 +26,22 @@ const MAX_CONTENT_WIDTH = 500;
 
 export function useResponsive(): ResponsiveInfo {
   const { width, height } = useWindowDimensions();
-  
+
   const isTablet = Platform.OS === 'ios' && width >= TABLET_BREAKPOINT;
   const isLandscape = width > height;
-  
+
   // Max content width - constrain on tablets for better readability
   const maxContentWidth = isTablet ? MAX_CONTENT_WIDTH : width;
-  
+
   // Grid columns based on screen size
   let gridColumns = 2;
   if (isTablet) {
     gridColumns = isLandscape ? 4 : 3;
   }
-  
+
   // Content padding
   const contentPadding = isTablet ? 32 : 16;
-  
+
   return {
     width,
     height,
